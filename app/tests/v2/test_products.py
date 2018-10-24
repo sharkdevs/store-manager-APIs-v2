@@ -17,6 +17,7 @@ class TestProductsFunctions(InitialSetup):
         self.assertEqual(Message,"Product Sucessfully edited")
         self.assertEqual(feedback.status_code,200)
 
+    '''Tests whether the product was successfully deleted'''
     def test_product_successfully_deleted(self):
         feedback = self.app.delete(
             '{}products/1'.format(self.base_url), 
