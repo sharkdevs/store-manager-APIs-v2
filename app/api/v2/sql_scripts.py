@@ -29,4 +29,3 @@ create_tbl_sales = """CREATE TABLE IF NOT EXISTS sales(
 query_insert_admin = """INSERT INTO users (username, email, password,role) VALUES('superadmin','su@admin.com','admin@2018*','admin') ON CONFLICT(email) DO NOTHING;"""
 
 query_get = """SELECT * FROM products;"""
-

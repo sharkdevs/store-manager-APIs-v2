@@ -7,10 +7,8 @@ class UserModel:
 
     def creat_user(self):
         pass
-    
-    def get_login_query(self, email, password):
-        query =""" SELECT * FROM users WHERE email = '{}' AND password = '{}';""".format(email, password)
-        return query
 
-    
-    
+    def get_login_query(self, email, password):
+        query = """ SELECT * FROM users WHERE email = '{}' AND password = '{}';""".format(
+            email, password)
+        return query
