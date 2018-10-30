@@ -41,8 +41,8 @@ class Db():
         Db().execute_query(query)
 
     def execute_query(self, query):
+        conn = Db().dbcon()
         try:
-            conn = Db().dbcon()
             cur = conn.cursor()
             cur.execute(query)
             conn.commit()
