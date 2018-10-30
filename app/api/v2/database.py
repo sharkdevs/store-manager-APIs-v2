@@ -42,14 +42,11 @@ class Db():
 
     def execute_query(self, query):
         conn = Db().dbcon()
-        try:
-            cur = conn.cursor()
-            cur.execute(query)
-            conn.commit()
-        except BaseException:
-            return "Could not execute query"
-        finally:
-            conn.close()
+        cur = conn.cursor()
+        cur.execute(query)
+        conn.commit()
+    
+        conn.close()
 
     def execute_select(self, query):
         try:
