@@ -47,3 +47,15 @@ class Db():
         finally:
             conn.close()
 
+    def execute_select(self, query):
+        try:
+            conn = Db().dbcon()
+            cur = conn.cursor()
+            cur.execute(query)
+            res = cur.fetchone()
+            conn.commit()
+            return res
+        except:
+            print("Could not execute query")
+        finally:
+            conn.close()

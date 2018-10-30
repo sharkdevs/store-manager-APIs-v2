@@ -1,5 +1,24 @@
 import re
 from flask import jsonify
+from app.api.v2.database import Db
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 """Check whether password is valid"""
 def password_validator(password):
     if re.match(r'[A-Za-z0-9!@£$%^&*()_+={}?:~[+]{6,}', password):
@@ -14,14 +33,11 @@ def mail_validator(email):
 def filter_item_detail(email,user_list):
     user = [user for user in user_list if user['email'] == email]
     return user
-"""Check if an item is already in store"""
-def is_available(item_key,item_value,item_list):
-    item = [item for item in item_list if item['{}'.format(item_key)] == item_value]
-    return item
+
 
 """Check if a field is empty"""
 def is_empty(field_list):
-    empty = [field for field in field_list if field ==""]
+    empty = [field for field in field_list if field =="" or field.isspace()]
     if empty != []:
         return True
 
