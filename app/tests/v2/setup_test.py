@@ -1,6 +1,7 @@
 import unittest
 
 from app import create_app
+from app.api.v2.database import Db
 class InitialSetup(unittest.TestCase):
 
     """Call the setup function to initialize items"""
@@ -8,6 +9,8 @@ class InitialSetup(unittest.TestCase):
         app = create_app(config_name='testing')
         app.app_context().push()
         self.app = app.test_client()
+        with app.app_context():
+            Db().db_init()
 
         #set a base url
         self.base_url = "/api/v2/"
@@ -22,8 +25,8 @@ class InitialSetup(unittest.TestCase):
         }
 
         self.login_details = {
-            "email" : "mesharkz1@gmail.com",
-            "password" : "123123"
+            "email" : "su@admin.com",
+            "password" : "admin@2018*"
         }
 
         self.product_details = {
