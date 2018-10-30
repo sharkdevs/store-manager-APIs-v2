@@ -4,7 +4,7 @@ from flask_jwt_extended import JWTManager
 
 #Import configurations
 from instance.config import app_config, Config
-from app.api.v2.database import DbConfig
+from app.api.v2.database import Db
 """Function to create the app instance"""
 def create_app(config_name):
     app = Flask(__name__,instance_relative_config=True)
@@ -18,7 +18,7 @@ def create_app(config_name):
     JWTManager(app)
 
     with app.app_context():
-        DbConfig().create_tables()
+        Db().db_init()
   
     from app.api.v2 import v2  # import the blueprint
     app.register_blueprint(v2)  # register the blueprint

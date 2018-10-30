@@ -1,13 +1,19 @@
 import os
 import psycopg2
+from flask import current_app
+
 from app.api.v2 import sql_scripts
-class DbConfig():
+class Db():
     
 
+    def db_init(self):
+        Db().create_tables()
+
+        Db().insert_default_data()
     
     '''Connect to the database'''
     def dbcon(self):
-        dbcon_url = os.environ.get('DB_URL')
+        dbcon_url = current_app.config.get('DB_URL')
 
         conn = psycopg2.connect(dbcon_url)
         
@@ -17,19 +23,27 @@ class DbConfig():
         scripts = [sql_scripts.create_tbl_products,sql_scripts.create_tbl_sales,sql_scripts.create_tbl_users]
 
         try:
-            conn = DbConfig().dbcon()
-            cur = conn.cursor()
+            
             for query in scripts:
-                cur.execute(query)
-            conn.commit()
-            conn.close()
+                Db().execute_query(query)
+           
             return "Tables successfully created"
         except:
             return "Failed to create a tables"
                 
 
+    def insert_default_data(self):
+        query = sql_scripts.query_insert_admin
+        Db().execute_query(query)
 
-# if __name__ == '__main__':
-#     db = DbConfig()
-#     respo = db.dbcon()
-#     print(respo)
+    def execute_query(self, query):
+        try:
+            conn = Db().dbcon()
+            cur = conn.cursor()
+            cur.execute(query)
+            conn.commit()
+        except:
+            return "Could not execute query"
+        finally:
+            conn.close()
+
