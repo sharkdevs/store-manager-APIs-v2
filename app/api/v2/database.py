@@ -63,3 +63,7 @@ class Db():
             print("Could not execute query")
         finally:
             conn.close()
+    
+    def destroy(self):
+        query1 = """DROP TABLE users, products, sales;"""
+        Db().execute_query(query1)

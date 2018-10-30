@@ -49,15 +49,6 @@ class InitialSetup(unittest.TestCase):
             "sales_date": "4th April 2018"
         }
 
-    """Perform a sample user registration and login to obtain an
-    Auth token to be used in the tests
-    """
-    # #register a sample user
-    # self.app.post(
-    #     '{}auth/signup'.format(self.base_url),
-    #     data = json.dumps(self.registration_details),
-    #     content_type='application/json'
-    #     )
-
-    # login a sample user
-    # self.auth_token = Users.user_login(self, "mesharkz1@gmail.com", "123123")
+    """Perform a Teardown"""
+    def tearDown(self):
+        Db().destroy() 

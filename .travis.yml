@@ -2,6 +2,14 @@ language: python
 
 python:
   - "3.6"
+cache: pip
+services:
+  - postgresql
+before_script:
+  - export APP_SETTINGS='testing'
+  - export SECRET_KEY='jsdflkvhadv;kab'
+  - export TEST_DB_URL='dbname=test_storemanager user=admin password=admin@2018* host=localhost' 
+  - psql -c 'create database test_storemanager;' -U admin
 
 install:
   - pip install -r requirements.txt
