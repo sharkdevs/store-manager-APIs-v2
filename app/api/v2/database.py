@@ -45,22 +45,25 @@ class Db():
         cur = conn.cursor()
         cur.execute(query)
         conn.commit()
-    
+
         conn.close()
 
     def execute_select(self, query):
         try:
             conn = Db().dbcon()
             cur = conn.cursor()
-            cur.execute(query)
+            res = cur.execute(query)
             res = cur.fetchone()
             conn.commit()
             return res
-        except BaseException:
+        except psycopg2.OperationalError as e:
             print("Could not execute query")
+            print (e.pgerror)
+            print (e.diag.message_detail)
         finally:
             conn.close()
     
+
     def destroy(self):
         query1 = """DROP TABLE users, products, sales;"""
         Db().execute_query(query1)

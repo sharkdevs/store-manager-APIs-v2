@@ -46,3 +46,33 @@ class UserLogin(Resource):
         auth = UserLogin.generate_auth_token(self, role)
 
         return {"auth": auth}, 200
+class UserRegistration(Resource):
+    def post(self):
+        required = reqparse.RequestParser()
+        required.add_argument(
+            'email', type=str,
+            help="You should enter you email to Register",
+            required=True)
+        required.add_argument(
+            'password', type=str,
+            help="Password required to continue",
+            required=True)  
+        required.add_argument(
+            'username', type=str,
+            help="You should enter your Username ",
+            required=True)
+        required.add_argument(
+            'role', type=str,
+            help="Role required to continue",
+            required=True)
+        
+        user = required.parse_args()
+
+        """Check whether email is already registered"""
+        value = None
+        value = UserModel.get_email_query(self,user['email'])
+        if value is not None:
+            return{"message": "User email already in use"},400
+
+        user1 = UserModel(user['username'],user['email'],user['password'],user['role']).creat_user()
+        return{"message": "User created successfully"},201
