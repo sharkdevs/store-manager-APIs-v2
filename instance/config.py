@@ -4,12 +4,13 @@ class Config():
     DEBUG = False
     TESTING = False
     CSRF_ENABLE = True
-    SECRET_KEY = os.getenv('SECRET_KEY')
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
 
 class Development(Config):
     DEBUG = True
     TESTING = True
-
+    DB_URL = os.environ.get('DB_URL')
 class Production(Config):
     DEBUG = False
     TESTING = False
@@ -17,6 +18,7 @@ class Production(Config):
 class Testing(Config):
     DEBUG = True
     TESTING = True
+    DB_URL = os.environ.get('TEST_DB_URL')    
 
 app_config = {
     "development" : Development,
