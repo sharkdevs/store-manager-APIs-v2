@@ -6,4 +6,4 @@ v2 = Blueprint('bp', __name__, url_prefix='/api/v2')
 
 app = Api(v2)
 
-app.add_resource(DbConfig, '/auth/connection')
+# app.add_resource(DbConfig, '/auth/connection')
