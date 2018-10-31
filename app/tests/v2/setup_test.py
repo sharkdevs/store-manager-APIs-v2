@@ -1,5 +1,5 @@
 import unittest
-
+from flask import json
 from app import create_app
 from app.api.v2.database import Db
 
@@ -22,8 +22,8 @@ class InitialSetup(unittest.TestCase):
         self.registration_details = {
             "userid": 1,
             "username": "Meshack",
-            "email": "mesharkz1@gmail.com",
-            "password": "123123",
+            "email": "jsdhjsdhfjsdh@gmail.com",
+            "password": "123@Asd",
             "role": "admin"
         }
 
@@ -48,6 +48,16 @@ class InitialSetup(unittest.TestCase):
             "sales_amount": 450,
             "sales_date": "4th April 2018"
         }
+
+        """login sample user"""
+        feedback = self.app.post(
+            '{}auth/login'.format(self.base_url),
+            data=json.dumps(
+                self.login_details),
+            content_type='application/json')
+        res = json.loads(feedback.data)
+        self.auth_token = res['auth']
+
 
     """Perform a Teardown"""
     def tearDown(self):

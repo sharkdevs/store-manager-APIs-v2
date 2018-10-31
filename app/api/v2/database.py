@@ -53,7 +53,7 @@ class Db():
             conn = Db().dbcon()
             cur = conn.cursor()
             res = cur.execute(query)
-            res = cur.fetchone()
+            res = cur.fetchall()
             conn.commit()
             return res
         except psycopg2.OperationalError as e:

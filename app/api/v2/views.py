@@ -1,6 +1,7 @@
 from flask import make_response, jsonify
 from flask_restful import Resource, reqparse
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+
 
 # local imports
 from app.api.v2 import validators
@@ -34,20 +35,24 @@ class UserLogin(Resource):
             return {"Message": "You cannot submit empty data"}, 400
         if validators.mail_validator(user['email']) != True:
             return {"Message": "Invalid email address"}, 400
-        user = None
+
         user = Db().execute_select(query)
-        if user is None:
+        if user == []:
             return make_response(jsonify({
                 "Message": "Invalid email or password "
             }), 400)
+        else:
+            role = user[0][4]
 
-        role = user[3]
-
-        auth = UserLogin.generate_auth_token(self, role)
+            auth = UserLogin.generate_auth_token(self, role)
 
         return {"auth": auth}, 200
 class UserRegistration(Resource):
+    @jwt_required
     def post(self):
+        if get_jwt_identity() != "admin": 
+            return {"message":"You are not authorized to register a user"},401
+
         required = reqparse.RequestParser()
         required.add_argument(
             'email', type=str,
