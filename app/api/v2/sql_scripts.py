@@ -26,6 +26,6 @@ create_tbl_sales = """CREATE TABLE IF NOT EXISTS sales(
         ON UPDATE NO ACTION ON DELETE NO ACTION
     );"""
 
-# query_insert_admin = """INSERT INTO users (username, email, password,role) VALUES('superadmin','su@admin.com','admin@2018*','admin') ON CONFLICT(email) DO NOTHING;"""
+query_insert_admin = """INSERT INTO users (username, email, password,role) VALUES('superadmin','su@admin.com','admin@2018*','admin');"""
 
 query_get = """SELECT * FROM products;"""

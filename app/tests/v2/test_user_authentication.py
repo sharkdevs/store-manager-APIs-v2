@@ -9,9 +9,9 @@ class TestUserRegistration(InitialSetup):
 
     """Test whether registraton goes successfully"""
     def test_that_a_user_was_succcessfully_registered(self):
-
-        """Test registration"""
+        
         auth_token = self.admin_login()
+        """Test registration"""
         response = self.app.post(
             '{}auth/signup'.format(self.base_url),
             headers = dict(Authorization="Bearer " + auth_token),
@@ -24,9 +24,16 @@ class TestUserRegistration(InitialSetup):
 
     """Test whether it gives authorization message to attendants who want to register"""
     def test_denies_attendant_access_to_registration(self):
-        
         self.register_attendant()
-        auth_token = self.attendant_login()
+        """Login an attendant"""
+        feedback = self.app.post(
+            '{}auth/login'.format(self.base_url),
+            data=json.dumps(
+                self.login_attendant),
+            content_type='application/json')
+        res = json.loads(feedback.data)
+        auth_token = res['auth']
+
         response = self.app.post(
             '{}auth/signup'.format(self.base_url),
             headers = dict(Authorization="Bearer " + auth_token),
