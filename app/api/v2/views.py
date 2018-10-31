@@ -74,7 +74,7 @@ class UserRegistration(Resource):
         user = required.parse_args()
         """Check for empty data"""
         if validators.is_empty([user['username'],user['email'],user['password'],user['role']]) is True:
-            return {"message":"You cannot Insert empty data."},400
+            return {"message":"You cannot insert empty data or numbers here."},400
         
         """check email validity"""
         if validators.mail_validator(user['email']) is not True:
@@ -96,6 +96,9 @@ class UserRegistration(Resource):
 class OneProduct(Resource):
     @jwt_required
     def post(self):
+        if get_jwt_identity() != "admin": 
+            return {"message":"You are not authorized to Create a product"},401
+            
         required = reqparse.RequestParser()
         required.add_argument(
             'product_name', type=str,
@@ -129,7 +132,7 @@ class OneProduct(Resource):
             product['quantity']
             ]
         if validators.is_empty(fields) is True:
-            return {"message":"You cannot Insert empty data."},400
+            return {"message":"You cannot insert empty data or numbers here."},400
         if validators.is_int(fields_int) is False:
             return {"message":"Quantity and price must be numbers"},400
         
