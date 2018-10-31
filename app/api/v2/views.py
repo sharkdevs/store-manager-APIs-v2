@@ -94,6 +94,18 @@ class UserRegistration(Resource):
         return{"message": "User created successfully"},201
 
 class OneProduct(Resource):
+    
+    """Get a product by id"""
+    @jwt_required
+    def get(self,id):
+        values = ProductModel.get_product_b_id(self,id)
+        if values == []:
+            return{"message": "That product is not in store"},404
+        return {"products":values},200
+
+class Products(Resource):
+
+    """Create a product"""
     @jwt_required
     def post(self):
         if get_jwt_identity() != "admin": 
@@ -147,3 +159,10 @@ class OneProduct(Resource):
             product['quantity'],
             product['product_image']).create_a_product()
         return {"message":"product created successfully"},201
+
+    @jwt_required
+    def get(self):
+        values = ProductModel.get_all_products(self)
+        if values == []:
+            return{"message": "You dont have products yet"},200
+        return {"products":values},200

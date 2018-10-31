@@ -14,6 +14,8 @@ class InitialSetup(unittest.TestCase):
         self.app = app.test_client()
         with app.app_context():
             Db().db_init()
+            Db().insert_default_data()
+
 
         # set a base url
         self.base_url = "/api/v2/"
@@ -64,6 +66,8 @@ class InitialSetup(unittest.TestCase):
             data = json.dumps(self.registration_details),
             content_type='application/json'
             )
+    
+
 
     def attendant_login(self):
         
