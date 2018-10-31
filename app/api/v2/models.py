@@ -67,12 +67,21 @@ class ProductModel:
         except (Exception, psycopg2.DatabaseError) as e:
             print(e)
 
+    """get product by  name"""
     def get_one_product_query(self, product_name):
         query = """ SELECT * FROM products WHERE product_name = '{}';""".format(
             product_name)
         response = Db().execute_select(query)
         return response
 
+    """Get product by id"""
+    def get_product_b_id(self, product_id):
+        query = """ SELECT * FROM products WHERE product_id = '{}';""".format(
+            product_id)
+        response = Db().execute_select(query)
+        return response
+    
+    """Get all products"""
     def get_all_products(self):
         query = """ SELECT * FROM products;"""
         response = Db().execute_select(query)
