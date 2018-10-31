@@ -1,28 +1,38 @@
 import re
 from flask import jsonify
-from app.api.v2.database import Db
-
 
 """Check whether password is valid"""
+
+
 def password_validator(password):
-    if re.match(r'[A-Za-z0-9!@£$%^&*()_+={}?:~[+]{6,}', password):
+    if re.match(r'^(?=.{6,}$)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).*', password):
         return True
 
+
 """Check whether the email is valid"""
+
+
 def mail_validator(email):
     if re.match(r'[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]', email.lower()):
         return True
 
+
 """Check if the email is registered"""
+
+
 def filter_item_detail(email, user_list):
     user = [user for user in user_list if user['email'] == email]
     return user
 
+
 """Check if a field is empty"""
+
+
 def is_empty(field_list):
     empty = [field for field in field_list if field == "" or field.isspace()]
     if empty != []:
         return True
+
 
 def validate_registration(username, email, password, role, users_list):
     err = []
@@ -38,6 +48,7 @@ def validate_registration(username, email, password, role, users_list):
     else:
         err.append("{} is already taken. Try another email".format(email))
     return err
+
 
 def validate_login(email, password, users_list):
     error = []
