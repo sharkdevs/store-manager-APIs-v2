@@ -29,9 +29,13 @@ def filter_item_detail(email, user_list):
 
 
 def is_empty(field_list):
-    empty = [field for field in field_list if field == "" or field.isspace()]
+    empty = [field for field in field_list if field == "" or field.isspace() or field.isdigit()]
     if empty != []:
         return True
+def is_int(field_list):
+    empty = [field for field in field_list if field == "" or not field.isdigit()]
+    if empty != []:
+        return False
 
 
 def validate_registration(username, email, password, role, users_list):

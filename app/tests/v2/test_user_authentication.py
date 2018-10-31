@@ -11,9 +11,10 @@ class TestUserRegistration(InitialSetup):
     def test_that_a_user_was_succcessfully_registered(self):
 
         """Test registration"""
+        auth_token = self.admin_login()
         response = self.app.post(
             '{}auth/signup'.format(self.base_url),
-            headers = dict(Authorization="Bearer " + self.auth_token),
+            headers = dict(Authorization="Bearer " + auth_token),
             data = json.dumps(self.registration_details),
             content_type='application/json'
             )
@@ -23,15 +24,18 @@ class TestUserRegistration(InitialSetup):
 
     """Test whether it gives authorization message to attendants who want to register"""
     def test_denies_attendant_access_to_registration(self):
+        
+        self.register_attendant()
+        auth_token = self.attendant_login()
         response = self.app.post(
             '{}auth/signup'.format(self.base_url),
-            headers = dict(Authorization="Bearer " + self.auth_token),
+            headers = dict(Authorization="Bearer " + auth_token),
             data = json.dumps(self.registration_details),
             content_type='application/json'
             )
         Message = json.loads(response.data)["message"]
-        self.assertEqual(Message,"You dont have access rights to registration module")
-        self.assertEqual(response.status_code,403)
+        self.assertEqual(Message,"You are not authorized to register a user")
+        self.assertEqual(response.status_code,401)
 
     def test_successfull_user_login(self):
         response = self.app.post( 

@@ -22,16 +22,20 @@ class InitialSetup(unittest.TestCase):
         self.registration_details = {
             "userid": 1,
             "username": "Meshack",
-            "email": "jsdhjsdhfjsdh@gmail.com",
-            "password": "123@Asd",
-            "role": "admin"
+            "email": "mesharkz1@gmail.com",
+            "password": "123@Sda",
+            "role": "attendant"
         }
 
         self.login_details = {
             "email": "su@admin.com",
             "password": "admin@2018*"
         }
-
+        
+        self.login_attendant = {
+            "email": "mesharkz1@gmail.com",
+            "password": "123@Sda"
+        }
         self.product_details = {
             "product_id": 1,
             "product_name": "Lexus",
@@ -49,15 +53,41 @@ class InitialSetup(unittest.TestCase):
             "sales_date": "4th April 2018"
         }
 
-        """login sample user"""
+       
+
+    def register_attendant(self):
+        auth_token = self.admin_login()
+        """Register a sample attendant"""
+        self.app.post(
+            '{}auth/signup'.format(self.base_url),
+            headers = dict(Authorization="Bearer " + auth_token),
+            data = json.dumps(self.registration_details),
+            content_type='application/json'
+            )
+
+    def attendant_login(self):
+        
+        """login sample attendant"""
+        feedback = self.app.post(
+            '{}auth/login'.format(self.base_url),
+            data=json.dumps(
+                self.login_attendant),
+            content_type='application/json')
+        res = json.loads(feedback.data)
+        auth_token = res['auth']
+        return auth_token
+
+    def admin_login(self):
+        
+        """login sample admin"""
         feedback = self.app.post(
             '{}auth/login'.format(self.base_url),
             data=json.dumps(
                 self.login_details),
             content_type='application/json')
         res = json.loads(feedback.data)
-        self.auth_token = res['auth']
-
+        auth_token = res['auth']
+        return auth_token
 
     """Perform a Teardown"""
     def tearDown(self):
