@@ -34,7 +34,7 @@ class TestUserRegistration(InitialSetup):
         self.assertEqual(response.status_code,403)
 
     def test_successfull_user_login(self):
-        response = self.app.post(
+        response = self.app.post( 
             '{}auth/login'.format(self.base_url),
             data=json.dumps(self.login_details),
             content_type='application/json'
