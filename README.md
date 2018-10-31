@@ -3,7 +3,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/e8d05349e313293cab9c/maintainability)](https://codeclimate.com/github/sharkdevs/store-manager-APIs-v2/maintainability)
 
 # store-manager-APIs-v2
-Create a API endspoints that allows the user to login
+Create a API endspoints that allows the user to login and administrators to register
 
 ## API Endpoints covered included in this branch
 
@@ -11,6 +11,7 @@ Create a API endspoints that allows the user to login
 | Method        |       Endpoint                |         Description               |
 | ------------- |       -------------           |         -------------             |
 | `POST`        |  `/api/v2/auth/login`         |           login a user            |
+| `POST`        |  `/api/v2/auth/signup`        |           register  a user        |
 
 ## Set Up instructions
 The following are a set of steps you can follow to set tu the application
