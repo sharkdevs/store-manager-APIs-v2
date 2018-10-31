@@ -72,3 +72,8 @@ class ProductModel:
             product_name)
         response = Db().execute_select(query)
         return response
+
+    def get_all_products(self):
+        query = """ SELECT * FROM products;"""
+        response = Db().execute_select(query)
+        return response
