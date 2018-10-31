@@ -1,13 +1,11 @@
 import re
 from flask import jsonify
-from app.api.v2.database import Db
-
 
 """Check whether password is valid"""
 
 
 def password_validator(password):
-    if re.match(r'[A-Za-z0-9!@£$%^&*()_+={}?:~[+]{6,}', password):
+    if re.match(r'^(?=.{6,}$)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).*', password):
         return True
 
 

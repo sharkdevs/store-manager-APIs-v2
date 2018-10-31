@@ -67,6 +67,17 @@ class UserRegistration(Resource):
             required=True)
         
         user = required.parse_args()
+        """Check for empty data"""
+        if validators.is_empty([user['username'],user['email'],user['password'],user['role']]) is True:
+            return {"message":"You cannot Insert empty data."},400
+        
+        """check email validity"""
+        if validators.mail_validator(user['email']) is not True:
+            return {"message":"Invalid email address."},400
+
+        """check password validity"""
+        if validators.password_validator(user['password']) is not True:
+            return {"message":"Password must contain atleast one letter, 1 number, uppercase charecter and be at least 6 character"},400
 
         """Check whether email is already registered"""
         value = None
