@@ -6,7 +6,7 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 # local imports
 from app.api.v2 import validators
 from app.api.v2.database import Db
-from .models import UserModel
+from .models import UserModel, ProductModel
 
 
 class UserLogin(Resource):
@@ -87,8 +87,60 @@ class UserRegistration(Resource):
         """Check whether email is already registered"""
         value = None
         value = UserModel.get_email_query(self,user['email'])
-        if value is not None:
+        if value != []:
             return{"message": "User email already in use"},400
 
         user1 = UserModel(user['username'],user['email'],user['password'],user['role']).creat_user()
         return{"message": "User created successfully"},201
+
+class OneProduct(Resource):
+    @jwt_required
+    def post(self):
+        required = reqparse.RequestParser()
+        required.add_argument(
+            'product_name', type=str,
+            help="Product name required",
+            required=True)
+        required.add_argument(
+            'product_price', type=str,
+            help="Product price required",
+            required=True)  
+        required.add_argument(
+            'description', type=str,
+            help="Description required",
+            required=True)
+        required.add_argument(
+            'quantity', type=str,
+            help="Quantity required",
+            required=True)
+        required.add_argument(
+            'product_image', type=str,
+            help="Product Image url required",
+            required=True)
+        
+        product = required.parse_args()
+        fields = [
+            product['product_name'],
+            product['description'],
+            product['product_image']
+            ]        
+        fields_int = [
+            product['product_price'],
+            product['quantity']
+            ]
+        if validators.is_empty(fields) is True:
+            return {"message":"You cannot Insert empty data."},400
+        if validators.is_int(fields_int) is False:
+            return {"message":"Quantity and price must be numbers"},400
+        
+        value = ProductModel.get_one_product_query(self,product['product_name'])
+        if value != []:
+            return{"message": "Product already exists"},400
+
+        ProductModel(
+            product['product_name'],
+            product['product_price'],
+            product['description'],
+            product['quantity'],
+            product['product_image']).create_a_product()
+        return {"message":"product created successfully"},201
