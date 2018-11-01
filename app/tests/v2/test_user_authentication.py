@@ -9,7 +9,7 @@ class TestUserRegistration(InitialSetup):
 
     """Test whether registraton goes successfully"""
     def test_that_a_user_was_succcessfully_registered(self):
-
+        
         auth_token = self.admin_login()
         """Test registration"""
         response = self.app.post(
@@ -45,7 +45,7 @@ class TestUserRegistration(InitialSetup):
         self.assertEqual(response.status_code,401)
 
     def test_successfull_user_login(self):
-        response = self.app.post(
+        response = self.app.post( 
             '{}auth/login'.format(self.base_url),
             data=json.dumps(self.login_details),
             content_type='application/json'
