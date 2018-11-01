@@ -23,16 +23,18 @@ class TestProductsFunctions(InitialSetup):
     #     self.assertEqual(res['message'], "Product requested not in store")
 
     '''Tests whether the product was successfully edited'''
-    # def test_product_modified_successfully(self):
-    #     feedback = self.app.put(
-    #         '{}products/1'.format(self.base_url),
-    #         headers = dict(Authorization="Bearer " + self.auth_token),
-    #         data = json.dumps(self.product_details),
-    #         content_type='application/json'
-    #         )
-    #     Message = json.loads(feedback.data)["Message"]
-    #     self.assertEqual(Message,"Product Sucessfully edited")
-    #     self.assertEqual(feedback.status_code,200)
+    def test_product_modified_successfully(self):
+        self.creat_product()
+        auth_token = self.admin_login()
+        feedback = self.app.put(
+            '{}products/1'.format(self.base_url),
+            headers = dict(Authorization="Bearer " + auth_token),
+            data = json.dumps(self.product_details),
+            content_type='application/json'
+            )
+        Message = json.loads(feedback.data)["message"]
+        self.assertEqual(Message,"product successfully updated")
+        self.assertEqual(feedback.status_code,201)
 
     '''Tests whether the product was successfully edited'''
     def test_product_created_successfully(self):
@@ -63,22 +65,22 @@ class TestProductsFunctions(InitialSetup):
         self.assertEqual(Message,"You are not authorized to Create a product")
         self.assertEqual(feedback.status_code,401)
 
-    # '''Tests Authorization msg for attendant modify attempts'''
-    # def test_returns_no_permision_if_attendant_modifies_a_product(self):
-    #     """Create and login an attendant"""
-    #     self.register_attendant()
-    #     auth_token = self.attendant_login()
+    '''Tests Authorization msg for attendant modify attempts'''
+    def test_returns_no_permision_if_attendant_modifies_a_product(self):
+        """Create and login an attendant"""
+        self.register_attendant()
+        auth_token = self.attendant_login()
 
         
-    #     feedback = self.app.put(
-    #         '{}products/1'.format(self.base_url),
-    #         headers = dict(Authorization="Bearer " + auth_token),
-    #         data = json.dumps(self.product_details),
-    #         content_type='application/json'
-    #         )
-    #     Message = json.loads(feedback.data)["Message"]
-    #     self.assertEqual(Message,"You dont have permissions to modify a product")
-    #     self.assertEqual(feedback.status_code,200)
+        feedback = self.app.put(
+            '{}products/1'.format(self.base_url),
+            headers = dict(Authorization="Bearer " + auth_token),
+            data = json.dumps(self.product_details),
+            content_type='application/json'
+            )
+        Message = json.loads(feedback.data)["message"]
+        self.assertEqual(Message,"You dont have permissions to modify a product")
+        self.assertEqual(feedback.status_code,401)
 
 
     # '''Tests whether the product was successfully deleted'''

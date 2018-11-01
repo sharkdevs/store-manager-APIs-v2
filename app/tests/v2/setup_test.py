@@ -39,11 +39,11 @@ class InitialSetup(unittest.TestCase):
             "password": "123@Sda"
         }
         self.product_details = {
-            "product_id": 1,
+            "product_id": "1",
             "product_name": "Lexus",
-            "product_price": 456000,
+            "product_price": "456000",
             "description": "Good vehicle",
-            "quantity": 50,
+            "quantity": "50",
             "product_image": "image/lexus.jpg"
         }
 
@@ -56,6 +56,17 @@ class InitialSetup(unittest.TestCase):
         }
 
        
+    def creat_product(self):
+        auth_token = self.admin_login()
+        feedback = self.app.post(
+            '{}products'.format(self.base_url),
+            headers = dict(Authorization="Bearer " + auth_token),
+            data = json.dumps(self.product_details),
+            content_type='application/json'
+            )
+        Message = json.loads(feedback.data)["message"]
+        self.assertEqual(Message,"product created successfully")
+        self.assertEqual(feedback.status_code,201)
 
     def register_attendant(self):
         auth_token = self.admin_login()

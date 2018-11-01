@@ -86,3 +86,18 @@ class ProductModel:
         query = """ SELECT * FROM products;"""
         response = Db().execute_select(query)
         return response
+    
+    def update_product(self, product_id, data):
+        query = """ UPDATE products 
+            SET product_name = '{}',
+            description = '{}', 
+            quantity = {}, 
+            product_image = '{}'
+            WHERE product_id = {};""".format(
+            data['product_name'],
+            data['description'],
+            data['quantity'], 
+            data['product_image'],
+            product_id)
+
+        Db().execute_query(query)

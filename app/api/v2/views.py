@@ -1,4 +1,4 @@
-from flask import make_response, jsonify
+from flask import make_response, jsonify,request
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
@@ -103,6 +103,37 @@ class OneProduct(Resource):
             return{"message": "That product is not in store"},404
         return {"products":values},200
 
+    @jwt_required
+    def put(self, id):
+
+        if get_jwt_identity() != "admin": 
+            return {"message":"You dont have permissions to modify a product"},401
+
+        product = ProductModel.get_product_b_id(self,id)
+
+        if product == []:
+            return {"message" : "product does not exist"},404
+
+        data = request.get_json()
+        if validators.is_empty([
+            data['product_name'],
+            data['product_image'],
+            data['description']
+            ]) is True:
+            return{"message":"Empty data or pure numbers not allowed here"},400
+
+        if validators.is_int([data['product_price'],data['quantity']]) is False:
+            return{"message":"price and quantity should be numbers"},400
+
+        comparison = ProductModel.get_one_product_query(self,data['product_name'])
+        if comparison[0][0] != id:
+            return{"message": "You have another product by that name"},400
+
+        ProductModel.update_product(self,id,data)
+
+        return {"message":"product successfully updated"},201
+        
+    
 class Products(Resource):
 
     """Create a product"""
@@ -166,3 +197,5 @@ class Products(Resource):
         if values == []:
             return{"message": "You dont have products yet"},200
         return {"products":values},200
+    
+   
