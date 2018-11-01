@@ -3,7 +3,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/e8d05349e313293cab9c/maintainability)](https://codeclimate.com/github/sharkdevs/store-manager-APIs-v2/maintainability)
 
 # store-manager-APIs-v2
-Create a API endspoints that allows the user to Manipulate products
+Create aN API endspoints that allows the user to edit a products
 
 ## API Endpoints covered included in this branch
 
@@ -15,6 +15,7 @@ Create a API endspoints that allows the user to Manipulate products
 | `POST`        |  `/api/v2/products`           |           add a product           |
 | `GET`         |  `/api/v2/products`           |           Get all product         |
 | `GET`         |  `/api/v2/products/<int:id>`  |           Get a product by id     |
+| `PUT`         |  `/api/v2/products/<int:id>`  |           UPDATE a product by id  |
 
 ## Set Up instructions
 The following are a set of steps you can follow to set tu the application
@@ -43,8 +44,8 @@ To test the endpointsensure that the following tools are available the follow st
 
 The app is deployed in heroku. Click [here](https://shark-store-manager.herokuapp.com/)
 after it opens, append the specific endpoint. 
-ie `<url>/api/v2/products`
+ie `<url>/api/v2/products/<int:id>`
 
-## Author
+## Author 
 
 [Meshack Ogeto ](https://github.com/sharkdevs)
