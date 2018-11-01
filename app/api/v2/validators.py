@@ -5,7 +5,9 @@ from flask import jsonify
 
 
 def password_validator(password):
-    if re.match(r'^(?=.{6,}$)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).*', password):
+    if re.match(
+        r'^(?=.{6,}$)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).*',
+            password):
         return True
 
 
@@ -29,11 +31,15 @@ def filter_item_detail(email, user_list):
 
 
 def is_empty(field_list):
-    empty = [field for field in field_list if field == "" or field.isspace() or field.isdigit()]
+    empty = [field for field in field_list if field ==
+             "" or field.isspace() or field.isdigit()]
     if empty != []:
         return True
+
+
 def is_int(field_list):
-    empty = [field for field in field_list if field == "" or not field.isdigit()]
+    empty = [field for field in field_list if field ==
+             "" or not field.isdigit()]
     if empty != []:
         return False
 

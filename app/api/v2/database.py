@@ -10,7 +10,6 @@ class Db():
     def db_init(self):
         Db().create_tables()
 
-
     '''Connect to the database'''
 
     def dbcon(self):
@@ -57,11 +56,10 @@ class Db():
             return res
         except psycopg2.OperationalError as e:
             print("Could not execute query")
-            print (e.pgerror)
-            print (e.diag.message_detail)
+            print(e.pgerror)
+            print(e.diag.message_detail)
         finally:
             conn.close()
-    
 
     def destroy(self):
         query1 = """DROP TABLE users, products, sales;"""

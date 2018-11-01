@@ -1,9 +1,9 @@
-[![Build Status](https://travis-ci.org/sharkdevs/store-manager-APIs-v2.svg?branch=ft-view-all-products-161621719)](https://travis-ci.org/sharkdevs/store-manager-APIs-v2)
-[![Coverage Status](https://coveralls.io/repos/github/sharkdevs/store-manager-APIs-v2/badge.svg?branch=ft-view-all-products-161621719)](https://coveralls.io/github/sharkdevs/store-manager-APIs-v2?branch=ft-view-all-products-161621719)
+[![Build Status](https://travis-ci.org/sharkdevs/store-manager-APIs-v2.svg?branch=ft-create-sale-order-161640391)](https://travis-ci.org/sharkdevs/store-manager-APIs-v2)
+[![Coverage Status](https://coveralls.io/repos/github/sharkdevs/store-manager-APIs-v2/badge.svg?branch=ft-create-sale-order-161640391)](https://coveralls.io/github/sharkdevs/store-manager-APIs-v2?branch=ft-create-sale-order-161640391)
 [![Maintainability](https://api.codeclimate.com/v1/badges/e8d05349e313293cab9c/maintainability)](https://codeclimate.com/github/sharkdevs/store-manager-APIs-v2/maintainability)
 
 # store-manager-APIs-v2
-Create an API endspoints that allows the admin to delete a products. This contains other endpoints as well
+Create an API endspoints that allows the store attendant to make a sale order. This contains other endpoints as well
 
 ## API Endpoints covered included in this branch
 
@@ -17,6 +17,7 @@ Create an API endspoints that allows the admin to delete a products. This contai
 | `GET`         |  `/api/v2/products/<int:id>`  |           Get a product by id     |
 | `PUT`         |  `/api/v2/products/<int:id>`  |           UPDATE a product by id  |
 | `DELETE`      |  `/api/v2/products/<int:id>`  |           DELETE a product by id  |
+| `POST`        |  `/api/v2/sales`              |           Make a sale order       |
 
 ## Set Up instructions
 The following are a set of steps you can follow to set tu the application
@@ -45,7 +46,7 @@ To test the endpointsensure that the following tools are available the follow st
 
 The app is deployed in heroku. Click [here](https://shark-store-manager.herokuapp.com/)
 after it opens, append the specific endpoint. 
-ie `<url>/api/v2/products/<int:id>`
+ie `<url>/api/v2/sales`
 
 ## Author 
 
