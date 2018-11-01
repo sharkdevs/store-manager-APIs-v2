@@ -1,26 +1,11 @@
-from flask import json, jsonify
 import unittest
+from flask import json, jsonify
 
 from app.tests.v2.setup_test import InitialSetup
 
-class TestProductsFunctions(InitialSetup):
-    '''Gives feedback if the product isout of stock'''
 
-    # def test_gives_Alert_feedback_if_product_not_in_stock(self):
-    #     auth_token = self.admin_login()
-    #     # make the quantity more than stock
-    #     self.sale_order['quantity'] = 80
-    #     feedback = self.app.post(
-    #         '{}sales'.format(
-    #             self.base_url),
-    #         headers=dict(
-    #             Authorization="Bearer " +
-    #             auth_token),
-    #         data=json.dumps(
-    #             self.sale_order),
-    #         content_type='application/json')
-    #     res = json.loads(feedback.data)
-    #     self.assertEqual(res['message'], "Product requested not in store")
+class TestProductsFunctions(InitialSetup):
+   
 
     '''Tests whether the product was successfully edited'''
     def test_product_modified_successfully(self):
@@ -38,7 +23,7 @@ class TestProductsFunctions(InitialSetup):
 
     '''Tests whether the product was successfully edited'''
     def test_product_created_successfully(self):
-        
+
         auth_token = self.admin_login()
         feedback = self.app.post(
             '{}products'.format(self.base_url),
@@ -71,7 +56,6 @@ class TestProductsFunctions(InitialSetup):
         self.register_attendant()
         auth_token = self.attendant_login()
 
-        
         feedback = self.app.put(
             '{}products/1'.format(self.base_url),
             headers = dict(Authorization="Bearer " + auth_token),
@@ -81,7 +65,6 @@ class TestProductsFunctions(InitialSetup):
         Message = json.loads(feedback.data)["message"]
         self.assertEqual(Message,"You dont have permissions to modify a product")
         self.assertEqual(feedback.status_code,401)
-
 
     '''Tests whether the product was successfully deleted'''
     def test_product_successfully_deleted(self):
