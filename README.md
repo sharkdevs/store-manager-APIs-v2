@@ -1,9 +1,9 @@
-[![Build Status](https://travis-ci.org/sharkdevs/store-manager-APIs-v2.svg?branch=ft-create-sale-order-161640391)](https://travis-ci.org/sharkdevs/store-manager-APIs-v2)
-[![Coverage Status](https://coveralls.io/repos/github/sharkdevs/store-manager-APIs-v2/badge.svg?branch=ft-create-sale-order-161640391)](https://coveralls.io/github/sharkdevs/store-manager-APIs-v2?branch=ft-create-sale-order-161640391)
+[![Build Status](https://travis-ci.org/sharkdevs/store-manager-APIs-v2.svg?branch=develop)](https://travis-ci.org/sharkdevs/store-manager-APIs-v2)
+[![Coverage Status](https://coveralls.io/repos/github/sharkdevs/store-manager-APIs-v2/badge.svg?branch=develop)](https://coveralls.io/github/sharkdevs/store-manager-APIs-v2?branch=develop)
 [![Maintainability](https://api.codeclimate.com/v1/badges/e8d05349e313293cab9c/maintainability)](https://codeclimate.com/github/sharkdevs/store-manager-APIs-v2/maintainability)
 
 # store-manager-APIs-v2
-Create an API endspoints that allows the store attendant to make a sale order. This contains other endpoints as well
+Store manager API Version 2 is a collection of API endpoints that enable store users to manipulate and manage the store. The users are in two categories, Administrators and attendants. Each of the categories needs authorization to access their bvarious endpoints
 
 ## API Endpoints covered included in this branch
 
@@ -18,6 +18,7 @@ Create an API endspoints that allows the store attendant to make a sale order. T
 | `PUT`         |  `/api/v2/products/<int:id>`  |           UPDATE a product by id  |
 | `DELETE`      |  `/api/v2/products/<int:id>`  |           DELETE a product by id  |
 | `POST`        |  `/api/v2/sales`              |           Make a sale order       |
+| `GET`         |  `/api/v2/sales`              |           Get all sale orders     |
 
 ## Set Up instructions
 The following are a set of steps you can follow to set tu the application
@@ -44,7 +45,7 @@ To test the endpointsensure that the following tools are available the follow st
      
 ## Deployment
 
-The app is deployed in heroku. Click [here](https://shark-store-manager.herokuapp.com/)
+The app is deployed in heroku. Click 
 after it opens, append the specific endpoint. 
 ie `<url>/api/v2/sales`
 

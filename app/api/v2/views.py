@@ -115,6 +115,29 @@ class OneProduct(Resource):
 
     @jwt_required
     def put(self, id):
+        required = reqparse.RequestParser()
+        required.add_argument(
+            'product_name', type=str,
+            help="You should enter product name",
+            required=True)
+        required.add_argument(
+            'product_image', type=str,
+            help="You should enter product Image",
+            required=True)
+        required.add_argument(
+            'product_price', type=str,
+            help="You should enter product_price ",
+            required=True)
+        required.add_argument(
+            'description', type=str,
+            help="description is required",
+            required=True)
+        required.add_argument(
+            'quantity', type=str,
+            help="quantity is required value",
+            required=True)
+
+        data = required.parse_args()
 
         if get_jwt_identity() != "admin":
             return {
@@ -125,7 +148,6 @@ class OneProduct(Resource):
         if product == []:
             return {"message": "product does not exist"}, 404
 
-        data = request.get_json()
         if validators.is_empty([
             data['product_name'],
             data['product_image'],
@@ -133,17 +155,19 @@ class OneProduct(Resource):
         ]) is True:
             return{"message": "Empty data or pure numbers not allowed here"}, 400
 
+        
         if validators.is_int(
                 [data['product_price'], data['quantity']]) is False:
             return{"message": "price and quantity should be numbers"}, 400
-
+        
         comparison = ProductModel.get_one_product_query(
             self, data['product_name'])
-        if comparison[0][0] != id:
-            return{"message": "You have another product by that name"}, 400
+        
+        if comparison != []:
+            if comparison[0][0] != id:
+                 return{"message": "You have another product by that name"}, 400
 
         ProductModel.update_product(self, id, data)
-
         return {"message": "product successfully updated"}, 201
 
     @jwt_required
@@ -273,3 +297,14 @@ class Sales(Resource):
         ProductModel.update_product_quantity(
             self, sales['product_id'], product[0][4] - int(sales['quantity']))
         return{"message": "sale created successfully"}
+
+    @jwt_required
+    def get(self):
+        if get_jwt_identity() !="admin":
+            return {"message":"You are not authorized to view sales records"},401
+
+        values = SalesModel.get_all_sales(self)
+        if values == []:
+            return{"message": "You dont have sales yet"}, 404
+
+        return {"sales": values}, 200
