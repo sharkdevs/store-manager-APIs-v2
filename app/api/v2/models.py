@@ -101,3 +101,6 @@ class ProductModel:
             product_id)
 
         Db().execute_query(query)
+    def delete_product(self,id):
+        query = """DELETE FROM products WHERE product_id = {};""".format(id)
+        Db().execute_query(query)
