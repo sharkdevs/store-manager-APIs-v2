@@ -133,6 +133,20 @@ class OneProduct(Resource):
 
         return {"message":"product successfully updated"},201
         
+
+    @jwt_required
+    def delete(self,id):
+        if get_jwt_identity() != "admin": 
+            return {"message":"You dont have permissions to delete a product"},401
+
+        product = ProductModel.get_product_b_id(self,id)
+
+        if product == []:
+            return {"message" : "product does not exist"},404
+        
+        ProductModel.delete_product(self,id)
+
+        return {"message":"product successfully deleted"},200
     
 class Products(Resource):
 
