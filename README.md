@@ -46,6 +46,6 @@ The app is deployed in heroku. Click [here](https://shark-store-manager.herokuap
 after it opens, append the specific endpoint. 
 ie `<url>/api/v2/products/<int:id>`
 
-## Author
+## Author 
 
 [Meshack Ogeto ](https://github.com/sharkdevs)
