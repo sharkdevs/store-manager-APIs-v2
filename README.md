@@ -3,7 +3,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/e8d05349e313293cab9c/maintainability)](https://codeclimate.com/github/sharkdevs/store-manager-APIs-v2/maintainability)
 
 # store-manager-APIs-v2
-Create an API endspoints that allows the admin to delete a products
+Create an API endspoints that allows the admin to delete a products. This contains other endpoints as well
 
 ## API Endpoints covered included in this branch
 
