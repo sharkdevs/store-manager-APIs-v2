@@ -101,31 +101,40 @@ class ProductModel:
             product_id)
 
         Db().execute_query(query)
+
+
+    def update_product_quantity(self, product_id, quant):
+        query = """ UPDATE products 
+            SET quantity = {}
+            WHERE product_id = {};""".format(quant, product_id)
+        Db().execute_query(query)
+
     def delete_product(self,id):
         query = """DELETE FROM products WHERE product_id = {};""".format(id)
         Db().execute_query(query)
-class Sales:
+class SalesModel:
     """" Initialize a sales description"""
 
-    def __init__(self, product_id, quantity, sales_price, sales_date):
+    def __init__(self, product_id, quantity, sales_price):
         self.product_id = product_id
         self.quantity = quantity
-        self.sales_date = sales_date
-        self.amount = sales_price*quantity
+        self.amount = sales_price
 
     """ Create a product sale."""
 
     def make_a_sale(self):
-        query = """INSERT INTO sales(product_id,quantity,sales_amount,,sales_date) 
-                VALUES(%s,%s,%s,%s) RETURNING product_id;"""
+        query = """INSERT INTO sales(product_id,quantity,sales_amount) 
+                VALUES(%s,%s,%s) RETURNING sales_id;"""
         try:
             conn = Db().dbcon()
             cur = conn.cursor()
-            cur.execute(query,(self.product_id,self.quantity,self.amount, self.quantity,self.sales_date))
+            cur.execute(query,(self.product_id,self.quantity,self.amount,))
             response = cur.fetchone()[0]
             conn.commit()
             return {"response":response},201
         except (Exception, psycopg2.DatabaseError) as e:
             print(e)
+        finally:
+            conn.close()
 
   

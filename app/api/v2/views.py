@@ -6,7 +6,7 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 # local imports
 from app.api.v2 import validators
 from app.api.v2.database import Db
-from .models import UserModel, ProductModel
+from .models import UserModel, ProductModel, SalesModel
 
 
 class UserLogin(Resource):
@@ -90,7 +90,7 @@ class UserRegistration(Resource):
         if value != []:
             return{"message": "User email already in use"},400
 
-        user1 = UserModel(user['username'],user['email'],user['password'],user['role']).creat_user()
+        UserModel(user['username'],user['email'],user['password'],user['role']).creat_user()
         return{"message": "User created successfully"},201
 
 class OneProduct(Resource):
@@ -211,5 +211,44 @@ class Products(Resource):
         if values == []:
             return{"message": "You dont have products yet"},200
         return {"products":values},200
-    
-   
+
+class Sales(Resource):
+    @jwt_required
+    def post(self):
+        if get_jwt_identity() !="attendant":
+            return{ "message":"You are not authorised to make sales"},401
+        
+        required = reqparse.RequestParser()
+        required.add_argument(
+            'product_id', type=str,
+            help="You should enter you product id to continue",
+            required=True)
+        required.add_argument(
+            'quantity', type=str,
+            help="Quantity is required",
+            required=True)        
+        
+        sales = required.parse_args()
+
+        if validators.is_int([sales['product_id'], sales['quantity']]) is False:
+            return {"message":"The field must be numbers"},400
+
+        product = ProductModel.get_product_b_id(self,sales['product_id'])
+
+        if product == []:
+            return {"message":"The product requested is not found"},404
+        
+        if product[0][4] < int(sales['quantity']):
+            return {"message": "we only have {} products in store. try again".format(product[0][4])},404
+        
+        response = None
+        sale1 = SalesModel(sales['product_id'],sales['quantity'],product[0][2])
+        response = sale1.make_a_sale()
+
+        if response is None:
+            return {"message":"could not complete sale"},404
+        ProductModel.update_product_quantity(self,sales['product_id'],product[0][4]-int(sales['quantity']))
+        return{"message":"sale created successfully"}
+        
+
+
