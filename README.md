@@ -3,7 +3,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/e8d05349e313293cab9c/maintainability)](https://codeclimate.com/github/sharkdevs/store-manager-APIs-v2/maintainability)
 
 # store-manager-APIs-v2
-Create aN API endspoints that allows the user to edit a products
+Create an API endspoints that allows the admin to delete a products
 
 ## API Endpoints covered included in this branch
 
@@ -16,6 +16,7 @@ Create aN API endspoints that allows the user to edit a products
 | `GET`         |  `/api/v2/products`           |           Get all product         |
 | `GET`         |  `/api/v2/products/<int:id>`  |           Get a product by id     |
 | `PUT`         |  `/api/v2/products/<int:id>`  |           UPDATE a product by id  |
+| `DELETE`      |  `/api/v2/products/<int:id>`  |           DELETE a product by id  |
 
 ## Set Up instructions
 The following are a set of steps you can follow to set tu the application
