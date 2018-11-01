@@ -157,3 +157,10 @@ class SalesModel:
             print(e)
         finally:
             conn.close()
+
+    """Get all sales from the store"""
+    
+    def get_all_sales(self):
+        query = """ SELECT * FROM sales;"""
+        response = Db().execute_select(query)
+        return response
