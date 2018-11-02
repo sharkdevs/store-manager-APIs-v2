@@ -308,3 +308,13 @@ class Sales(Resource):
             return{"message": "You dont have sales yet"}, 404
 
         return {"sales": values}, 200
+
+class OneSale(Resource):
+
+    """Get a sale by id"""
+    @jwt_required
+    def get(self, id):
+        values = SalesModel.get_sale_by_id(self, id)
+        if values == []:
+            return{"message": "That sale is not in store"}, 404
+        return {"sales": values}, 200
