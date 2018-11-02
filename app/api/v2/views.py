@@ -296,7 +296,7 @@ class Sales(Resource):
             return {"message": "could not complete sale"}, 404
         ProductModel.update_product_quantity(
             self, sales['product_id'], product[0][4] - int(sales['quantity']))
-        return{"message": "sale created successfully"}
+        return{"message": "sale created successfully"},201
 
     @jwt_required
     def get(self):
