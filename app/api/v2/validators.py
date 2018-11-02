@@ -41,3 +41,4 @@ def is_int(field_list):
 def strip_spaces(field_list):
     for field in field_list:
         field.strip()
+    return field_list
