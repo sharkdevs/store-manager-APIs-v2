@@ -53,6 +53,13 @@ class InitialSetup(unittest.TestCase):
             "sales_amount": 450,
             "sales_date": "4th April 2018"
         }
+    def make_sale(self, auth_token):
+        self.app.post(
+            '{}sales'.format(self.base_url),
+            headers=dict(Authorization="Bearer " + auth_token),
+            data=json.dumps(self.sale_order),
+            content_type='application/json'
+        )
 
     def creat_product(self):
         auth_token = self.admin_login()
