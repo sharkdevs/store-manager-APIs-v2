@@ -314,6 +314,9 @@ class OneSale(Resource):
     """Get a sale by id"""
     @jwt_required
     def get(self, id):
+        if get_jwt_identity() != "admin":
+            return {"message":"You are not authorised to view sales"},401
+
         values = SalesModel.get_sale_by_id(self, id)
         if values == []:
             return{"message": "That sale is not in store"}, 404
