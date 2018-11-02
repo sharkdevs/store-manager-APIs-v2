@@ -35,7 +35,9 @@ def is_empty(field_list):
 def is_int(field_list):
     empty = [field for field in field_list if field ==
              "" or not field.isdigit()]
-    for field in field_list:
-        field.strip()
+    
     if empty != []:
         return False
+def strip_spaces(field_list):
+    for field in field_list:
+        field.strip()

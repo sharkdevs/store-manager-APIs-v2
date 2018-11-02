@@ -111,7 +111,19 @@ class OneProduct(Resource):
         values = ProductModel.get_product_b_id(self, id)
         if values == []:
             return{"message": "That product is not in store"}, 404
-        return {"products": values}, 200
+        
+        products = []
+        for value in values:
+            product = {
+                "product_id":value[0],
+                "product_name":value[1],
+                "product_price":value[2],
+                "description":value[3],
+                "quantity":value[4],
+                "product_image":value[5]
+            }
+            products.append(product)
+        return {"product": products[0]}, 200
 
     @jwt_required
     def put(self, id):
@@ -238,11 +250,11 @@ class Products(Resource):
             return{"message": "Product already exists"}, 400
 
         ProductModel(
-            product['product_name'],
-            product['product_price'],
-            product['description'],
-            product['quantity'],
-            product['product_image']).create_a_product()
+            product['product_name'].strip(),
+            product['product_price'].strip(),
+            product['description'].strip(),
+            product['quantity'].strip(),
+            product['product_image'].strip()).create_a_product()
         return {"message": "product created successfully"}, 201
 
     @jwt_required
@@ -250,7 +262,18 @@ class Products(Resource):
         values = ProductModel.get_all_products(self)
         if values == []:
             return{"message": "You dont have products yet"}, 200
-        return {"products": values}, 200
+        products = []
+        for value in values:
+            product = {
+                "product_id":value[0],
+                "product_name":value[1],
+                "product_price":value[2],
+                "description":value[3],
+                "quantity":value[4],
+                "product_image":value[5]
+            }
+            products.append(product)
+        return {"products in stock": products}, 200
 
 
 class Sales(Resource):
@@ -274,6 +297,8 @@ class Sales(Resource):
         if validators.is_int(
                 [sales['product_id'], sales['quantity']]) is False:
             return {"message": "The field must be numbers"}, 400
+        sales['product_id']=sales['product_id'].strip()
+        sales['quantity'] = sales['quantity'].strip()
 
         product = ProductModel.get_product_b_id(self, sales['product_id'])
 
@@ -306,8 +331,18 @@ class Sales(Resource):
         values = SalesModel.get_all_sales(self)
         if values == []:
             return{"message": "You dont have sales yet"}, 404
+        sales = []
+        for value in values:
+            sale = {
+                "sales_id":value[0],
+                "product_id":value[1],
+                "quantity":value[2],
+                "sales_amount":value[3]
+            }
+            sales.append(sale)
 
-        return {"sales": values}, 200
+
+        return {"Sales Record": sales}, 200
 
 class OneSale(Resource):
 
@@ -320,4 +355,13 @@ class OneSale(Resource):
         values = SalesModel.get_sale_by_id(self, id)
         if values == []:
             return{"message": "That sale is not in store"}, 404
-        return {"sales": values}, 200
+        sales = []
+        for value in values:
+            sale = {
+                "sales_id":value[0],
+                "product_id":value[1],
+                "quantity":value[2],
+                "sales_amount":value[3]
+            }
+            sales.append(sale)
+        return {"sales": sales[0]}, 200
