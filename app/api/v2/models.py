@@ -165,3 +165,12 @@ class SalesModel:
         query = """ SELECT * FROM sales;"""
         response = Db().execute_select(query)
         return response
+
+    """Get product by id"""
+
+    def get_sale_by_id(self, sales_id):
+        query = """ SELECT * FROM sales WHERE sales_id = '{}';""".format(
+            sales_id)
+        response = Db().execute_select(query)
+        return response
+        
