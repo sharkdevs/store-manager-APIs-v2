@@ -9,6 +9,7 @@ class Db():
 
     def db_init(self):
         Db().create_tables()
+        Db().insert_default_data()
 
     '''Connect to the database'''
 
@@ -33,6 +34,7 @@ class Db():
             return "Tables successfully created"
         except BaseException:
             return "Failed to create a tables"
+
 
     def insert_default_data(self):
         query = sql_scripts.query_insert_admin

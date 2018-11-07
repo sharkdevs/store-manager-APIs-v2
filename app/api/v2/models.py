@@ -16,14 +16,14 @@ class UserModel:
 
     def creat_user(self):
         query = """INSERT INTO users(username, email, password,role)
-                VALUES(%s,%s,%s,%s) RETURNING userid;"""
+                VALUES(TRIM(%s),TRIM(%s),TRIM(%s),TRIM(%s)) RETURNING userid;"""
         try:
             conn = Db().dbcon()
             cur = conn.cursor()
             cur.execute(
                 query,
                 (self.username,
-                 self.email,
+                 self.email.lower(),
                  self.password,
                  self.role))
             response = cur.fetchone()[0]
@@ -35,14 +35,14 @@ class UserModel:
     """Get a specific user login detail"""
 
     def get_login_query(self, email, password):
-        query = """ SELECT * FROM users WHERE email = '{}' AND password = '{}';""".format(
+        query = """ SELECT * FROM users WHERE TRIM(email) = lower(TRIM('{}')) AND password = '{}';""".format(
             email, password)
         return query
     """check if user email exists"""
 
     def get_email_query(self, email):
-        query = """ SELECT * FROM users WHERE email = '{}';""".format(
-            email)
+        query = """ SELECT * FROM users WHERE TRIM(lower(email)) = '{}';""".format(
+            email.strip().lower())
         response = Db().execute_select(query)
         return response
 
@@ -67,7 +67,7 @@ class ProductModel:
 
     def create_a_product(self):
         query = """INSERT INTO products(product_name, product_price, description,quantity,product_image)
-                VALUES(%s,%s,%s,%s,%s) RETURNING product_id;"""
+                VALUES(TRIM(%s),%s,TRIM(%s),%s,TRIM(%s)) RETURNING product_id;"""
         try:
             conn = Db().dbcon()
             cur = conn.cursor()
@@ -87,8 +87,8 @@ class ProductModel:
     """get product by  name"""
 
     def get_one_product_query(self, product_name):
-        query = """ SELECT * FROM products WHERE product_name = '{}';""".format(
-            product_name)
+        query = """ SELECT * FROM products WHERE TRIM(lower(product_name)) = '{}';""".format(
+            product_name.lower())
         response = Db().execute_select(query)
         return response
 
@@ -109,10 +109,10 @@ class ProductModel:
 
     def update_product(self, product_id, data):
         query = """ UPDATE products
-            SET product_name = '{}',
-            description = '{}',
+            SET product_name = TRIM('{}'),
+            description = TRIM('{}'),
             quantity = {},
-            product_image = '{}'
+            product_image = TRIM('{}')
             WHERE product_id = {};""".format(
             data['product_name'],
             data['description'],

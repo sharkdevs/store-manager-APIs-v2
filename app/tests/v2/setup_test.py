@@ -52,6 +52,13 @@ class InitialSetup(unittest.TestCase):
             "quantity": 3,
             "sales_amount": 450,
             "sales_date": "4th April 2018"
+        }        
+        self.sale_order_0 = {
+            "sales_id": 1,
+            "product_id": 1,
+            "quantity": 0,
+            "sales_amount": 450,
+            "sales_date": "4th April 2018"
         }
     def make_sale(self, auth_token):
         self.app.post(
@@ -91,7 +98,7 @@ class InitialSetup(unittest.TestCase):
                 self.login_attendant),
             content_type='application/json')
         res = json.loads(feedback.data)
-        auth_token = res['auth']
+        auth_token = res['auth_token']
         return auth_token
 
     def admin_login(self):
@@ -102,7 +109,7 @@ class InitialSetup(unittest.TestCase):
                 self.login_details),
             content_type='application/json')
         res = json.loads(feedback.data)
-        auth_token = res['auth']
+        auth_token = res['auth_token']
         return auth_token
 
     """Perform a Teardown"""
