@@ -4,6 +4,18 @@ python:
   - "3.6"
 services:
   - postgresql
+
+# postgres 10
+addons:
+  postgresql: "10"
+  apt:
+    packages:
+    - postgresql-10
+    - postgresql-client-10
+env:
+  global:
+  - PGPORT=5433
+# end postgres
 before_script:
   - export SECRET_KEY='my-api-key'
   - export JWT_SECRET_KEY='hhahahv/f-hej67'
