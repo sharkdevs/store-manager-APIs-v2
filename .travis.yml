@@ -12,9 +12,7 @@ addons:
     packages:
     - postgresql-10
     - postgresql-client-10
-env:
-  global:
-  - PGPORT=5432
+
 # end postgres
 before_script:
   - export SECRET_KEY='my-api-key'
