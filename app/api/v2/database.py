@@ -39,11 +39,6 @@ class Db():
     def insert_default_data(self):
         query = sql_scripts.query_insert_admin
         Db().execute_query(query)
-    
-    def insert_default_test_data(self):
-        query = sql_scripts.query_insert_test_admin
-        Db().execute_query(query)
-
 
     def execute_query(self, query):
         conn = Db().dbcon()

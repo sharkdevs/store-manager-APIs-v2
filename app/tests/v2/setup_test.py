@@ -13,9 +13,8 @@ class InitialSetup(unittest.TestCase):
         app.app_context().push()
         self.app = app.test_client()
         with app.app_context():
-            Db().destroy()
-            Db().create_tables()
-            Db().insert_default_test_data()
+            Db().db_init()
+            Db().insert_default_data()
 
         # set a base url
         self.base_url = "/api/v2/"
