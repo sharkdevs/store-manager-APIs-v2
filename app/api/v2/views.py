@@ -28,12 +28,12 @@ class UserLogin(Resource):
     def post(self):
         user = self.required.parse_args()
         query = UserModel.get_login_query(
-            self, user['email'], user['password'])
+            self, user['email'].lower(), user['password'])
 
         # check whether field is empty
         if validators.is_empty([user['email'], user['password']]):
             return {"Message": "You cannot submit empty data"}, 400
-        if validators.mail_validator(user['email']) != True:
+        if validators.mail_validator(user['email'].lower()) != True:
             return {"Message": "Invalid email address"}, 400
 
         user = Db().execute_select(query)
@@ -46,7 +46,10 @@ class UserLogin(Resource):
 
             auth = UserLogin.generate_auth_token(self, role)
 
-        return {"auth": auth}, 200
+        return {
+            "message":"successful login",
+            "auth_token": auth
+            }, 200
 
 
 class UserRegistration(Resource):
@@ -91,13 +94,13 @@ class UserRegistration(Resource):
 
         """Check whether email is already registered"""
         value = None
-        value = UserModel.get_email_query(self, user['email'])
+        value = UserModel.get_email_query(self, user['email'].lower())
         if value != []:
             return{"message": "User email already in use"}, 400
 
         UserModel(
             user['username'],
-            user['email'],
+            user['email'].lower(),
             user['password'],
             user['role']).creat_user()
         return{"message": "User created successfully"}, 201
@@ -173,7 +176,7 @@ class OneProduct(Resource):
             return{"message": "price and quantity should be numbers"}, 400
         
         comparison = ProductModel.get_one_product_query(
-            self, data['product_name'])
+            self, data['product_name'].lower().strip())
         
         if comparison != []:
             if comparison[0][0] != id:
@@ -245,7 +248,7 @@ class Products(Resource):
             return {"message": "Quantity and price must be numbers"}, 400
 
         value = ProductModel.get_one_product_query(
-            self, product['product_name'])
+            self, product['product_name'].strip())
         if value != []:
             return{"message": "Product already exists"}, 400
 

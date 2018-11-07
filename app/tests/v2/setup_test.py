@@ -91,7 +91,7 @@ class InitialSetup(unittest.TestCase):
                 self.login_attendant),
             content_type='application/json')
         res = json.loads(feedback.data)
-        auth_token = res['auth']
+        auth_token = res['auth_token']
         return auth_token
 
     def admin_login(self):
@@ -102,7 +102,7 @@ class InitialSetup(unittest.TestCase):
                 self.login_details),
             content_type='application/json')
         res = json.loads(feedback.data)
-        auth_token = res['auth']
+        auth_token = res['auth_token']
         return auth_token
 
     """Perform a Teardown"""
