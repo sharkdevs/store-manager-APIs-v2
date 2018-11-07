@@ -52,6 +52,13 @@ class InitialSetup(unittest.TestCase):
             "quantity": 3,
             "sales_amount": 450,
             "sales_date": "4th April 2018"
+        }        
+        self.sale_order_0 = {
+            "sales_id": 1,
+            "product_id": 1,
+            "quantity": 0,
+            "sales_amount": 450,
+            "sales_date": "4th April 2018"
         }
     def make_sale(self, auth_token):
         self.app.post(

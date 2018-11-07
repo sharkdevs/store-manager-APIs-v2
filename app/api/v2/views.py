@@ -300,6 +300,10 @@ class Sales(Resource):
         if validators.is_int(
                 [sales['product_id'], sales['quantity']]) is False:
             return {"message": "The field must be numbers"}, 400
+            
+        if int(sales['quantity'])==0:
+            return {"message":"You can not sell zero quantity"},400
+
         sales['product_id']=sales['product_id'].strip()
         sales['quantity'] = sales['quantity'].strip()
 

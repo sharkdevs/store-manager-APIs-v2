@@ -99,3 +99,18 @@ class TestProductsFunctions(InitialSetup):
         Message = json.loads(feedback.data)["message"]
         self.assertEqual(Message, "sale created successfully")
         self.assertEqual(feedback.status_code, 201)
+
+    def test_attendant_cant_sale_null_values(self):
+        """Attendant cant sell 0 products"""
+        self.creat_product()
+        self.register_attendant()
+        auth_token = self.attendant_login()
+        feedback = self.app.post(
+            '{}sales'.format(self.base_url),
+            headers=dict(Authorization="Bearer " + auth_token),
+            data=json.dumps(self.sale_order_0),
+            content_type='application/json'
+        )
+        Message = json.loads(feedback.data)["message"]
+        self.assertEqual(Message, "You can not sell zero quantity")
+        self.assertEqual(feedback.status_code, 400)
