@@ -21,8 +21,8 @@ def create_app(config_name):
     JWTManager(app)
 
     #Enable Cross origin resource sharing
-    CORS(app)
-
+    CORS(app, resources=r'/api/v2/*', headers='Content-Type')
+    
     with app.app_context():
         Db().db_init()
 
