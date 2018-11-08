@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 
 # Import configurations
 from instance.config import app_config, Config
@@ -18,6 +19,9 @@ def create_app(config_name):
 
     # Add JWT manager
     JWTManager(app)
+
+    #Enable Cross origin resource sharing
+    CORS(app)
 
     with app.app_context():
         Db().db_init()
