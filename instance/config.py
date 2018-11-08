@@ -10,7 +10,7 @@ class Config():
 class Development(Config):
     DEBUG = True
     TESTING = True
-    DB_URL = os.environ.get('DB_URL')
+    DB_URL = os.environ.get('DATABASE_URL')
 class Production(Config):
     DEBUG = False
     TESTING = False
