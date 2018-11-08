@@ -22,11 +22,11 @@ def create_app(config_name):
 
     #Enable Cross origin resource sharing
     CORS(app, resources=r'/api/v2/*', headers='Content-Type')
-    
+
     with app.app_context():
         Db().db_init()
 
     from app.api.v2 import v2  # import the blueprint
-    app.register_blueprint(v2)  # register the blueprint
+    app.register_blueprint(v2)  # register the blueprint 
 
     return app
