@@ -32,14 +32,14 @@ class UserLogin(Resource):
 
         # check whether field is empty
         if validators.is_empty([user['email'], user['password']]):
-            return {"Message": "You cannot submit empty data"}, 400
+            return {"message": "You cannot submit empty data"}, 400
         if validators.mail_validator(user['email'].lower()) != True:
-            return {"Message": "Invalid email address"}, 400
+            return {"message": "Invalid email address"}, 400
 
         user = Db().execute_select(query)
         if user == []:
             return make_response(jsonify({
-                "Message": "Invalid email or password "
+                "message": "Invalid email or password "
             }), 400)
         else:
             role = user[0][4]
