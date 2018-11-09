@@ -65,7 +65,7 @@ class TestUserRegistration(InitialSetup):
             }),
             content_type='application/json'
         )
-        Message = json.loads(response.data)["Message"]
+        Message = json.loads(response.data)["message"]
         self.assertEqual(Message, "Invalid email or password ")
 
     """Gives feedback on bad password"""
@@ -79,5 +79,5 @@ class TestUserRegistration(InitialSetup):
             }),
             content_type='application/json'
         )
-        Message = json.loads(response.data)["Message"]
+        Message = json.loads(response.data)["message"]
         self.assertEqual(Message, "Invalid email or password ")
