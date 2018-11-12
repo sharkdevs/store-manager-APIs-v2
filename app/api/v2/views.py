@@ -252,12 +252,15 @@ class Products(Resource):
         if value != []:
             return{"message": "Product already exists"}, 400
 
-        ProductModel(
+        prod = ProductModel(
             product['product_name'].strip(),
             product['product_price'].strip(),
             product['description'].strip(),
             product['quantity'].strip(),
             product['product_image'].strip()).create_a_product()
+        print(prod)
+        if prod == None: 
+            return {"message": "Sorry, Product was not created "}, 500
         return {"message": "product created successfully"}, 201
 
     @jwt_required

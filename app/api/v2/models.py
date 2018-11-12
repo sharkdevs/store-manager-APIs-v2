@@ -84,6 +84,7 @@ class ProductModel:
         except (Exception, psycopg2.DatabaseError) as e:
             print(e)
 
+
     """get product by  name"""
 
     def get_one_product_query(self, product_name):
