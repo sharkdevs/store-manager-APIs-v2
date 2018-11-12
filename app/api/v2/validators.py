@@ -1,5 +1,11 @@
+import os
 import re
-from flask import jsonify
+from flask import jsonify, request
+
+
+
+
+
 
 """Check whether password is valid"""
 
