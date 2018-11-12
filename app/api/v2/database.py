@@ -8,6 +8,7 @@ from app.api.v2 import sql_scripts
 class Db():
 
     def db_init(self):
+        Db().destroy()
         Db().create_tables()
         Db().insert_default_data()
 
