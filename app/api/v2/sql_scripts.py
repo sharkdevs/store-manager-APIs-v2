@@ -17,12 +17,16 @@ create_tbl_users = """CREATE TABLE IF NOT EXISTS users(
 
 create_tbl_sales = """CREATE TABLE IF NOT EXISTS sales(
         sales_id serial PRIMARY KEY,
+        attendant_id INT NOT NULL,
         product_id INT NOT NULL,
         quantity INT NOT NULL,
         sales_amount INT NOT NULL,
-        sales_date timestamp,
+        sales_date timestamp default current_timestamp,
         CONSTRAINT sales_products_id_fkey FOREIGN KEY (product_id)
         REFERENCES products (product_id) MATCH SIMPLE
+        ON UPDATE NO ACTION ON DELETE NO ACTION,
+        CONSTRAINT sales_user_id_fkey FOREIGN KEY (attendant_id)
+        REFERENCES users (userid) MATCH SIMPLE
         ON UPDATE NO ACTION ON DELETE NO ACTION
     );"""
 

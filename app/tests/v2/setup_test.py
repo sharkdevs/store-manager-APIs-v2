@@ -55,6 +55,7 @@ class InitialSetup(unittest.TestCase):
         }        
         self.sale_order_0 = {
             "sales_id": 1,
+            "attendant_id":1,
             "product_id": 1,
             "quantity": 0,
             "sales_amount": 450,

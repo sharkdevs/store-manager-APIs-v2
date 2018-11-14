@@ -23,8 +23,8 @@ class Db():
     def create_tables(self):
         scripts = [
             sql_scripts.create_tbl_products,
-            sql_scripts.create_tbl_sales,
-            sql_scripts.create_tbl_users]
+            sql_scripts.create_tbl_users,
+            sql_scripts.create_tbl_sales]
 
         try:
 

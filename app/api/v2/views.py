@@ -42,9 +42,9 @@ class UserLogin(Resource):
                 "message": "Invalid email or password "
             }), 400)
         else:
-            role = user[0][4]
+            uid_role = {"id":user[0][0],"role":user[0][4]}
 
-            auth = UserLogin.generate_auth_token(self, role)
+            auth = UserLogin.generate_auth_token(self, uid_role)
 
         return {
             "message":"successful login",
@@ -55,7 +55,8 @@ class UserLogin(Resource):
 class UserRegistration(Resource):
     @jwt_required
     def post(self):
-        if get_jwt_identity() != "admin":
+        
+        if get_jwt_identity()['role'] != "admin":
             return {"message": "You are not authorized to register a user"}, 401
 
         required = reqparse.RequestParser()
@@ -154,7 +155,7 @@ class OneProduct(Resource):
 
         data = required.parse_args()
 
-        if get_jwt_identity() != "admin":
+        if get_jwt_identity()['role'] != "admin":
             return {
                 "message": "You dont have permissions to modify a product"}, 401
 
@@ -187,7 +188,7 @@ class OneProduct(Resource):
 
     @jwt_required
     def delete(self, id):
-        if get_jwt_identity() != "admin":
+        if get_jwt_identity()['role'] != "admin":
             return {
                 "message": "You dont have permissions to delete a product"}, 401
 
@@ -206,7 +207,7 @@ class Products(Resource):
     """Create a product"""
     @jwt_required
     def post(self):
-        if get_jwt_identity() != "admin":
+        if get_jwt_identity()['role'] != "admin":
             return {"message": "You are not authorized to Create a product"}, 401
 
         required = reqparse.RequestParser()
@@ -285,7 +286,7 @@ class Products(Resource):
 class Sales(Resource):
     @jwt_required
     def post(self):
-        if get_jwt_identity() != "attendant":
+        if get_jwt_identity()['role'] != "attendant":
             return{"message": "You are not authorised to make sales"}, 401
 
         required = reqparse.RequestParser()
@@ -322,6 +323,7 @@ class Sales(Resource):
 
         response = None
         sale1 = SalesModel(
+            get_jwt_identity()['id'],
             sales['product_id'],
             sales['quantity'],
             product[0][2])
@@ -335,7 +337,7 @@ class Sales(Resource):
 
     @jwt_required
     def get(self):
-        if get_jwt_identity() !="admin":
+        if get_jwt_identity()['role'] !="admin":
             return {"message":"You are not authorized to view sales records"},401
 
         values = SalesModel.get_all_sales(self)
@@ -359,7 +361,7 @@ class OneSale(Resource):
     """Get a sale by id"""
     @jwt_required
     def get(self, id):
-        if get_jwt_identity() != "admin":
+        if get_jwt_identity()['role'] != "admin":
             return {"message":"You are not authorised to view sales"},401
 
         values = SalesModel.get_sale_by_id(self, id)

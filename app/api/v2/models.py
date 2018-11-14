@@ -137,20 +137,21 @@ class ProductModel:
 class SalesModel:
     """" Initialize a sales description"""
 
-    def __init__(self, product_id, quantity, sales_price):
+    def __init__(self,attendant_id, product_id, quantity, sales_price):
         self.product_id = product_id
         self.quantity = quantity
         self.amount = sales_price
+        self.attendant_id = attendant_id
 
     """ Create a product sale."""
 
     def make_a_sale(self):
-        query = """INSERT INTO sales(product_id,quantity,sales_amount)
-                VALUES(%s,%s,%s) RETURNING sales_id;"""
+        query = """INSERT INTO sales(attendant_id,product_id,quantity,sales_amount)
+                VALUES(%s,%s,%s,%s) RETURNING sales_id;"""
         try:
             conn = Db().dbcon()
             cur = conn.cursor()
-            cur.execute(query, (self.product_id, self.quantity, self.amount,))
+            cur.execute(query, (self.attendant_id,self.product_id, self.quantity, self.amount,))
             response = cur.fetchone()[0]
             conn.commit()
             return {"response": response}, 201
