@@ -7,6 +7,7 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 from app.api.v2 import validators
 from app.api.v2.database import Db
 from .models import UserModel, ProductModel, SalesModel
+import datetime
 
 
 class UserLogin(Resource):
@@ -22,7 +23,9 @@ class UserLogin(Resource):
         required=True)
 
     def generate_auth_token(self, role):
-        auth_token = create_access_token(identity=role)
+        #set token expiry time
+        exp = datetime.timedelta(minutes = 60)
+        auth_token = create_access_token(identity=role,expires_delta=exp)
         return auth_token
 
     def post(self):
