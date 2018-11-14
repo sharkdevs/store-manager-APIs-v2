@@ -322,11 +322,13 @@ class Sales(Resource):
                     product[0][4])}, 404
 
         response = None
+        sales_amt = product[0][2] * int(sales['quantity'])
         sale1 = SalesModel(
             get_jwt_identity()['id'],
             sales['product_id'],
             sales['quantity'],
-            product[0][2])
+            sales_amt
+            )
         response = sale1.make_a_sale()
 
         if response is None:
@@ -347,10 +349,13 @@ class Sales(Resource):
         for value in values:
             sale = {
                 "sales_id":value[0],
-                "product_id":value[1],
-                "quantity":value[2],
-                "sales_amount":value[3]
-            }
+                "user_id":value[1],
+                "product_id":value[2],
+                "quantity":value[3],
+                "sales_amount":value[4],
+                "sales_date":str(value[5])
+
+            }  
             sales.append(sale)
 
 
@@ -371,9 +376,11 @@ class OneSale(Resource):
         for value in values:
             sale = {
                 "sales_id":value[0],
-                "product_id":value[1],
-                "quantity":value[2],
-                "sales_amount":value[3]
-            }
+                "user_id":value[1],
+                "product_id":value[2],
+                "quantity":value[3],
+                "sales_amount":value[4],
+                "sales_date":str(value[5])
+            }  
             sales.append(sale)
         return {"sales": sales[0]}, 200
