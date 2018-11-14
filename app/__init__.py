@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask,redirect
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 
@@ -28,5 +28,9 @@ def create_app(config_name):
 
     from app.api.v2 import v2  # import the blueprint
     app.register_blueprint(v2)  # register the blueprint 
+
+    @app.route('/')
+    def home():
+        return redirect('https://storemanagerapiversion2.docs.apiary.io')
 
     return app

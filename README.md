@@ -7,22 +7,6 @@ Store manager API Version 2 is a collection of API endpoints that enable store u
 
 Data of the API endpoints is persisted through a postgres database that is hosted in heroku alongside  the application. 
 
-## API Endpoints covered included in this branch
-
-
-| Method        |       Endpoint                |         Description               |
-| ------------- |       -------------           |         -------------             |
-| `POST`        |  `/api/v2/auth/login`         |           login a user            |
-| `POST`        |  `/api/v2/auth/signup`        |           register  a user        |
-| `POST`        |  `/api/v2/products`           |           add a product           |
-| `GET`         |  `/api/v2/products`           |           Get all product         |
-| `GET`         |  `/api/v2/products/<int:id>`  |           Get a product by id     |
-| `PUT`         |  `/api/v2/products/<int:id>`  |           UPDATE a product by id  |
-| `DELETE`      |  `/api/v2/products/<int:id>`  |           DELETE a product by id  |
-| `POST`        |  `/api/v2/sales`              |           Make a sale order       |
-| `GET`         |  `/api/v2/sales`              |           Get all sale orders     |
-| `GET`         |  `/api/v2/sales/<int:id>`     |           Get one sale order      |
-
 ## Set Up instructions
 The following are a set of steps you can follow to set tu the application
 #### Cloning the application
@@ -53,6 +37,24 @@ To test the endpoints, ensure that the following tools are available the follow 
 The app is deployed in heroku [Click here ](https://shark-store-v2.herokuapp.com/). Click 
 after it opens, append the specific endpoint. 
 ie `<url>/api/v2/sales`
+
+## API Endpoints covered included in this branch
+
+
+| Method        |       Endpoint                |         Description               |
+| ------------- |       -------------           |         -------------             |
+| `POST`        |  `/api/v2/auth/login`         |           login a user            |
+| `POST`        |  `/api/v2/auth/signup`        |           register  a user        |
+| `POST`        |  `/api/v2/products`           |           add a product           |
+| `GET`         |  `/api/v2/products`           |           Get all product         |
+| `GET`         |  `/api/v2/products/<int:id>`  |           Get a product by id     |
+| `PUT`         |  `/api/v2/products/<int:id>`  |           UPDATE a product by id  |
+| `DELETE`      |  `/api/v2/products/<int:id>`  |           DELETE a product by id  |
+| `POST`        |  `/api/v2/sales`              |           Make a sale order       |
+| `GET`         |  `/api/v2/sales`              |           Get all sale orders     |
+| `GET`         |  `/api/v2/sales/<int:id>`     |           Get one sale order      |
+
+
 
 ## Author 
 
