@@ -164,7 +164,17 @@ class SalesModel:
     """Get all sales from the store"""
 
     def get_all_sales(self):
-        query = """ SELECT * FROM sales;"""
+        query = """SELECT sales_id, product_name, username, sales_date,quantity, sales_amount 
+                FROM 
+                (
+                    SELECT * FROM sales JOIN users 
+                    ON sales.attendant_id = users.userid
+                ) as query
+                JOIN
+                (
+                    SELECT product_id,product_name FROM products
+                ) as qp 
+                ON query.product_id = qp.product_id;"""
         response = Db().execute_select(query)
         return response
 

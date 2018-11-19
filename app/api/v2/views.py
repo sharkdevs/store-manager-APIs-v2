@@ -352,11 +352,11 @@ class Sales(Resource):
         for value in values:
             sale = {
                 "sales_id":value[0],
-                "user_id":value[1],
-                "product_id":value[2],
-                "quantity":value[3],
-                "sales_amount":value[4],
-                "sales_date":str(value[5])
+                "product_name":value[1],
+                "username":value[2],
+                "quantity":value[4],
+                "sales_amount":value[5],
+                "sales_date":str(value[3])
 
             }  
             sales.append(sale)
